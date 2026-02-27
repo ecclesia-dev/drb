@@ -47,7 +47,7 @@ This project intentionally stays small. We aim to:
 - ✅ Read and search the Douay-Rheims Bible text
 - ✅ Support standard reference notation
 - ✅ Work on any POSIX system
-- ❌ Not add commentary, cross-references, or study features
+- ✅ Provide commentary via `-c` flag (Haydock, Lapide, Douai 1609)
 - ❌ Not support other translations (use [kjv](https://github.com/LukeSmithxyz/kjv) for King James)
 
 ## Community

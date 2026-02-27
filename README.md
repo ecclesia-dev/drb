@@ -175,3 +175,6 @@ paste <(drb John 1:1 | cut -f2) <(vul John 1:1 | cut -f2)
 ```
 
 *Ad Maiorem Dei Gloriam.*
+
+---
+_Built by Jerome. Reviewed by Bellarmine (theology) and Pius (content alignment)._

@@ -91,7 +91,7 @@ The entire OT commentary exists only in the original Latin. Lapide wrote comment
 - `bub_gb_jaKplDFFOeYC` — Acts + Canonical Epistles (1627)
 
 ### Future Project: AI Translation of Latin OT
-The Latin originals for the entire OT are available. These could be translated using AI (Claude, GPT-4, etc.) in a future project. The Latin text quality from Google Books scans varies but is generally readable.
+The Latin originals for the entire OT are available. These could be translated using automated processing tools in a future project. The Latin text quality from Google Books scans varies but is generally readable.
 
 ---
 
