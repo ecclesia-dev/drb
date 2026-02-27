@@ -24,4 +24,7 @@ uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/bin/drb
 	rm -f $(DESTDIR)$(PREFIX)/share/bash-completion/completions/drb
 
-.PHONY: test clean install uninstall
+hooks:
+	sh scripts/install-hooks.sh
+
+.PHONY: test clean install uninstall hooks
