@@ -6,7 +6,7 @@
 
 A command-line tool for reading the Douay-Rheims Bible (Challoner revision) — the classic English translation of the Latin Vulgate, with all 73 books of the Catholic canon including the deuterocanonical books.
 
-Includes the **Haydock Catholic Bible Commentary** (full Bible, 35,000+ entries) with Cornelius à Lapide and 1609 Douai annotations coming soon.
+Includes the **Haydock Catholic Bible Commentary** (full Bible, 35,000+ entries), **Cornelius à Lapide** New Testament commentary, and the **1609 Douai Annotations** (original Rheims-Douai marginal notes).
 
 Inspired by [Luke Smith's kjv](https://github.com/LukeSmithxyz/kjv). Built for Catholics who live in the terminal.
 
@@ -74,13 +74,16 @@ Use `-c` to display commentary below each verse. Defaults to Haydock:
 ```
 $ drb -c John 1:1              # Haydock (default)
 $ drb -c lapide Matthew 1:2    # Cornelius à Lapide
-$ drb -c -c lapide John 1:1   # both Haydock and Lapide
-$ drb -c all Matthew 1:2       # all available commentaries
+$ drb -c douai Genesis 22:1    # 1609 Douai Annotations
+$ drb -c 1609 Genesis 22:1     # alias for douai
+$ drb -c all John 3:16         # all available commentaries
 ```
 
 **Haydock** covers the entire Bible (35,000+ entries) — Church Fathers, Doctors of the Church, traditional Catholic exegesis.
 
 **Cornelius à Lapide** covers the New Testament (2,400+ entries) — Gospels, 1-2 Corinthians, Galatians, 1 John. Dense, scholarly commentary from the 17th century Jesuit exegete.
+
+**1609 Douai Annotations** (`-c douai` or `-c 1609`) — the original marginal notes from the 1609 Douay Old Testament and 1582 Rheims New Testament (3,100+ entries). Text preserves original 1609 spelling: the long-s character ſ is printed as *f*, and archaic orthography is authentic, not a typo.
 
 ### Random verse
 
@@ -132,9 +135,9 @@ drb> Wisdom 7
 |--------|----------|---------|
 | **Haydock** (Rev. George Leo Haydock, 1859) | Full Bible | 35,000+ |
 | **Cornelius à Lapide** (English NT) | Gospels, Epistles | 2,400+ |
-| **1609 Douai Annotations** | Partial (original Douai notes) | 3,100+ |
+| **1609 Douai Annotations** | OT + NT (original Douai/Rheims notes) | 3,100+ |
 
-Use `-c haydock` or `-c lapide` to select. Douai 1609 annotation support is in progress.
+Use `-c haydock`, `-c lapide`, or `-c douai` (alias: `-c 1609`) to select. Use `-c all` to show all three.
 
 All commentary texts are public domain (pre-1928).
 

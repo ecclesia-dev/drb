@@ -23,7 +23,9 @@ show_help() {
 	echo "  -l              list books"
 	echo "  -r              random verse"
 	echo "  -c [SOURCE]     show commentary (default: haydock)"
-	echo "                  sources: haydock, lapide"
+	echo "                  sources: haydock, lapide, douai"
+	echo "                  Note: douai (alias: 1609) uses original 1609 spelling —"
+	echo "                  ſ rendered as f, archaic orthography is authentic"
 	echo "  -W              no line wrap"
 	echo "  -h              show help"
 	echo
@@ -71,7 +73,7 @@ while [ $# -gt 0 ]; do
 	elif [ "$1" = "-c" ]; then
 		shift
 		case "$1" in
-			haydock|lapide|all)
+			haydock|lapide|douai|1609|all)
 				if [ -z "$DRB_COMMENTARY" ]; then
 					export DRB_COMMENTARY="$1"
 				else
@@ -137,15 +139,37 @@ if [ -n "${DRB_COMMENTARY}" ]; then
 		esac
 	}
 
+	# Map full DRB book names to 1609 Douai TSV abbreviations
+	douai_abbrev() {
+		case "$1" in
+			Genesis) echo "Gn" ;; Exodus) echo "Ex" ;; Leviticus) echo "Lv" ;;
+			Numbers) echo "Nm" ;; Deuteronomy) echo "Dt" ;; Joshua) echo "Jos" ;;
+			Judges) echo "Jgs" ;; Ruth) echo "Ru" ;; Ezra) echo "Ezr" ;;
+			Tobit) echo "Tb" ;; Judith) echo "Jdt" ;; Esther) echo "Est" ;;
+			"1 Maccabees") echo "1Mc" ;; Job) echo "Jb" ;; Psalms) echo "Ps" ;;
+			Proverbs) echo "Prv" ;; Ecclesiastes) echo "Eccl" ;;
+			"Song of Solomon") echo "Sg" ;; Wisdom) echo "Wis" ;;
+			Sirach) echo "Sir" ;; Isaiah) echo "Is" ;; Jeremiah) echo "Jer" ;;
+			Baruch) echo "Bar" ;; Daniel) echo "Dn" ;; Amos) echo "Am" ;;
+			Zechariah) echo "Zec" ;; Malachi) echo "Mal" ;; Matthew) echo "Mt" ;;
+			Mark) echo "Mk" ;; Luke) echo "Lk" ;; John) echo "Jn" ;;
+			Romans) echo "Rom" ;; "1 Corinthians") echo "1Cor" ;;
+			Galatians) echo "Gal" ;; Ephesians) echo "Eph" ;;
+			Philippians) echo "Phil" ;; Colossians) echo "Col" ;;
+			Hebrews) echo "Heb" ;; Titus) echo "Ti" ;; Philemon) echo "Phlm" ;;
+			Jude) echo "Jude" ;; Apocalypse) echo "Apc" ;; *) echo "" ;;
+		esac
+	}
+
 	# Expand "all" and build source list
 	sources=""
 	case "${DRB_COMMENTARY}" in
-		*all*) sources="haydock lapide" ;;
+		*all*) sources="haydock lapide douai" ;;
 		*)
 			IFS=','
 			for s in ${DRB_COMMENTARY}; do
 				case "$s" in
-					haydock|lapide) sources="$sources $s" ;;
+					haydock|lapide|douai|1609) sources="$sources $s" ;;
 				esac
 			done
 			unset IFS
@@ -158,8 +182,9 @@ if [ -n "${DRB_COMMENTARY}" ]; then
 	show_commentary() {
 		_src="$1"
 		case "$_src" in
-			haydock) _label="Haydock Commentary" ; _tsv="haydock.tsv" ;;
-			lapide)  _label="Cornelius à Lapide"  ; _tsv="lapide.tsv" ;;
+			haydock)    _label="Haydock Commentary"      ; _tsv="haydock.tsv" ;;
+			lapide)     _label="Cornelius à Lapide"      ; _tsv="lapide.tsv" ;;
+			douai|1609) _label="Douai Annotations (1609)"; _tsv="douai-1609.tsv" ;;
 		esac
 		echo ""
 		echo "--- ${_label} ---"
@@ -172,6 +197,13 @@ if [ -n "${DRB_COMMENTARY}" ]; then
 				*)
 					if [ "$_src" = "lapide" ]; then
 						abbrev=$(lapide_abbrev "$curbook")
+						if [ -z "$abbrev" ]; then
+							continue
+						fi
+						get_data "$_tsv" | grep "^${abbrev}	${line}	" | cut -f3 | \
+						   awk -v verse="$line" 'BEGIN{printf "  %s\t", verse}{print}'
+					elif [ "$_src" = "douai" ] || [ "$_src" = "1609" ]; then
+						abbrev=$(douai_abbrev "$curbook")
 						if [ -z "$abbrev" ]; then
 							continue
 						fi
