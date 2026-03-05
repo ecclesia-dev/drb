@@ -2,11 +2,11 @@
 
 **Read the Douay-Rheims Bible from your terminal.**
 
-`73 Books · Vulgate Order · 3 Commentaries · Public Domain`
+`73 Books · Vulgate Order · 4 Commentaries · Public Domain`
 
 A command-line tool for reading the Douay-Rheims Bible (Challoner revision) — the classic English translation of the Latin Vulgate, with all 73 books of the Catholic canon including the deuterocanonical books.
 
-Includes the **Haydock Catholic Bible Commentary** (full Bible, 35,000+ entries), **Cornelius à Lapide** New Testament commentary, and the **1609 Douai Annotations** (original Rheims-Douai marginal notes).
+Includes the **Haydock Catholic Bible Commentary** (full Bible, 35,000+ entries), **Cornelius à Lapide** New Testament commentary, the **1609 Douai Annotations** (original Rheims-Douai marginal notes), and **Aquinas' Catena Aurea** with commentary on the Gospels and Pauline epistles.
 
 Inspired by [Luke Smith's kjv](https://github.com/LukeSmithxyz/kjv). Built for Catholics who live in the terminal.
 
@@ -90,6 +90,7 @@ $ drb -c John 1:1              # Haydock (default)
 $ drb -c lapide Matthew 1:2    # Cornelius à Lapide
 $ drb -c douai Genesis 22:1    # 1609 Douai Annotations
 $ drb -c 1609 Genesis 22:1     # alias for douai
+$ drb -c aquinas Matthew 5:3   # Aquinas (Catena Aurea)
 $ drb -c all John 3:16         # all available commentaries
 ```
 
@@ -98,6 +99,8 @@ $ drb -c all John 3:16         # all available commentaries
 **Cornelius à Lapide** covers the New Testament (2,400+ entries) — Gospels, 1-2 Corinthians, Galatians, 1 John. Dense, scholarly commentary from the 17th century Jesuit exegete.
 
 **1609 Douai Annotations** (`-c douai` or `-c 1609`) — the original marginal notes from the 1609 Douay Old Testament and 1582 Rheims New Testament (3,100+ entries). Text preserves original 1609 spelling: the long-s character ſ is printed as *f*, and archaic orthography is authentic, not a typo.
+
+**Aquinas (Catena Aurea)** (`-c aquinas`) — St. Thomas Aquinas' *Catena Aurea* ("Golden Chain"), a verse-by-verse compilation of patristic commentary on the four Gospels, together with his commentary on the Pauline epistles. Draws on Chrysostom, Augustine, Jerome, Ambrose, and other Fathers. Gospel commentary uses `aquinas-catena.tsv`; Pauline epistle commentary uses `aquinas-epistles.tsv` (sourced by Alcuin).
 
 ### Random verse
 
@@ -150,8 +153,9 @@ drb> Wisdom 7
 | **Haydock** (Rev. George Leo Haydock, 1859) | Full Bible | 35,000+ |
 | **Cornelius à Lapide** (English NT) | Gospels, Epistles | 2,400+ |
 | **1609 Douai Annotations** | OT + NT (original Douai/Rheims notes) | 3,100+ |
+| **Aquinas (Catena Aurea)** (St. Thomas Aquinas) | Gospels + Pauline Epistles | — |
 
-Use `-c haydock`, `-c lapide`, or `-c douai` (alias: `-c 1609`) to select. Use `-c all` to show all three.
+Use `-c haydock`, `-c lapide`, `-c douai` (alias: `-c 1609`), or `-c aquinas` to select. Use `-c all` to show all four.
 
 All commentary texts are public domain (pre-1928).
 

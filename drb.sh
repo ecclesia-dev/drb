@@ -32,9 +32,10 @@ show_help() {
 	echo "  -t [VERSION]    translation version (default: challoner)"
 	echo "                  versions: challoner, 1609"
 	echo "  -c [SOURCE]     show commentary (default: haydock)"
-	echo "                  sources: haydock, lapide, douai"
+	echo "                  sources: haydock, lapide, douai, aquinas"
 	echo "                  Note: douai (alias: 1609) uses original 1609 spelling —"
 	echo "                  ſ rendered as f, archaic orthography is authentic"
+	echo "                  aquinas: Catena Aurea (Gospels) + Epistles commentary"
 	echo "  -W              no line wrap"
 	echo "  -h              show help"
 	echo
@@ -82,7 +83,7 @@ while [ $# -gt 0 ]; do
 	elif [ "$1" = "-c" ]; then
 		shift
 		case "$1" in
-			haydock|lapide|douai|1609|all)
+			haydock|lapide|douai|1609|aquinas|all)
 				if [ -z "$DRB_COMMENTARY" ]; then
 					export DRB_COMMENTARY="$1"
 				else
@@ -184,15 +185,30 @@ if [ -n "${DRB_COMMENTARY}" ]; then
 		esac
 	}
 
+	# Map full DRB book names to Aquinas TSV abbreviations (Gospels + Pauline epistles)
+	aquinas_abbrev() {
+		case "$1" in
+			Matthew) echo "Mt" ;; Mark) echo "Mk" ;; Luke) echo "Lk" ;;
+			John) echo "Jn" ;; Romans) echo "Rom" ;;
+			"1 Corinthians") echo "1Cor" ;; "2 Corinthians") echo "2Cor" ;;
+			Galatians) echo "Gal" ;; Ephesians) echo "Eph" ;;
+			Philippians) echo "Phil" ;; Colossians) echo "Col" ;;
+			"1 Thessalonians") echo "1Th" ;; "2 Thessalonians") echo "2Th" ;;
+			"1 Timothy") echo "1Tim" ;; "2 Timothy") echo "2Tim" ;;
+			Titus) echo "Ti" ;; Philemon) echo "Phlm" ;; Hebrews) echo "Heb" ;;
+			*) echo "" ;;
+		esac
+	}
+
 	# Expand "all" and build source list
 	sources=""
 	case "${DRB_COMMENTARY}" in
-		*all*) sources="haydock lapide douai" ;;
+		*all*) sources="haydock lapide douai aquinas" ;;
 		*)
 			IFS=','
 			for s in ${DRB_COMMENTARY}; do
 				case "$s" in
-					haydock|lapide|douai|1609) sources="$sources $s" ;;
+					haydock|lapide|douai|1609|aquinas) sources="$sources $s" ;;
 				esac
 			done
 			unset IFS
@@ -205,9 +221,10 @@ if [ -n "${DRB_COMMENTARY}" ]; then
 	show_commentary() {
 		_src="$1"
 		case "$_src" in
-			haydock)    _label="Haydock Commentary"      ; _tsv="haydock.tsv" ;;
-			lapide)     _label="Cornelius à Lapide"      ; _tsv="lapide.tsv" ;;
-			douai|1609) _label="Douai Annotations (1609)"; _tsv="douai-1609.tsv" ;;
+			haydock)    _label="Haydock Commentary"         ; _tsv="haydock.tsv" ;;
+			lapide)     _label="Cornelius à Lapide"         ; _tsv="lapide.tsv" ;;
+			douai|1609) _label="Douai Annotations (1609)"   ; _tsv="douai-1609.tsv" ;;
+			aquinas)    _label="Aquinas (Catena Aurea)"      ; _tsv="" ;;
 		esac
 		echo ""
 		echo "--- ${_label} ---"
@@ -231,6 +248,17 @@ if [ -n "${DRB_COMMENTARY}" ]; then
 							continue
 						fi
 						get_data "$_tsv" | grep "^${abbrev}	${line}	" | cut -f3 | \
+						   awk -v verse="$line" 'BEGIN{printf "  %s\t", verse}{print}'
+					elif [ "$_src" = "aquinas" ]; then
+						abbrev=$(aquinas_abbrev "$curbook")
+						if [ -z "$abbrev" ]; then
+							continue
+						fi
+						case "$abbrev" in
+							Mt|Mk|Lk|Jn) _aq_tsv="aquinas-catena.tsv" ;;
+							*)            _aq_tsv="aquinas-epistles.tsv" ;;
+						esac
+						get_data "$_aq_tsv" | grep "^${abbrev}	${line}	" | cut -f3 | \
 						   awk -v verse="$line" 'BEGIN{printf "  %s\t", verse}{print}'
 					else
 						get_data "$_tsv" | grep "^${curbook}	${line}	" | cut -f3 | \
