@@ -51,10 +51,24 @@ drb [flags] [reference...]
 
   -l      list books
   -r      random verse
+  -t      translation version (default: challoner)
+          versions: challoner, 1609
   -c      show Haydock commentary alongside verses
   -W      no line wrap
   -h      show help
 ```
+
+### Translation versions
+
+```
+$ drb Genesis 1:1              # default: Challoner revision
+$ drb -t 1609 Genesis 1:1     # original 1609 Douay-Rheims
+$ drb -t challoner Genesis 1:1 # explicit Challoner
+```
+
+The **1609 Douay-Rheims** is the original pre-revision text, more literal, translating directly from the Latin Vulgate. Archaic spelling is preserved ("heauen", "darknes", "diuided", "foule") — this is authentic, not a typo.
+
+The **Challoner revision** (1749–1752) is the standard Catholic English Bible. It modernised spelling, smoothed the prose, and adjusted some renderings. This is the default.
 
 ### Reading
 

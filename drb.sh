@@ -8,6 +8,13 @@ get_data() {
 	sed '1,/^#EOF$/d' < "$SELF" | tar xzf - -O "$1"
 }
 
+get_text_data() {
+	case "${DRB_TRANSLATION:-challoner}" in
+		1609) get_data drb-1609.tsv ;;
+		*)    get_data drb.tsv ;;
+	esac
+}
+
 if [ -z "$PAGER" ]; then
 	if command -v less >/dev/null; then
 		PAGER="less"
@@ -22,6 +29,8 @@ show_help() {
 	echo
 	echo "  -l              list books"
 	echo "  -r              random verse"
+	echo "  -t [VERSION]    translation version (default: challoner)"
+	echo "                  versions: challoner, 1609"
 	echo "  -c [SOURCE]     show commentary (default: haydock)"
 	echo "                  sources: haydock, lapide, douai"
 	echo "                  Note: douai (alias: 1609) uses original 1609 spelling —"
@@ -63,12 +72,12 @@ while [ $# -gt 0 ]; do
 		shift
 		break
 	elif [ "$1" = "-l" ]; then
-		get_data drb.tsv | awk -v cmd=list "$(get_data drb.awk)"
+		get_text_data | awk -v cmd=list "$(get_data drb.awk)"
 		exit
 	elif [ "$1" = "-r" ]; then
-		total=$(get_data drb.tsv | wc -l)
+		total=$(get_text_data | wc -l)
 		line=$(awk 'BEGIN{srand(); print int(rand()*'"$total"')+1}')
-		get_data drb.tsv | awk -v cmd=random -v line="$line" "$(get_data drb.awk)"
+		get_text_data | awk -v cmd=random -v line="$line" "$(get_data drb.awk)"
 		exit
 	elif [ "$1" = "-c" ]; then
 		shift
@@ -97,6 +106,20 @@ while [ $# -gt 0 ]; do
 				fi
 				;;
 		esac
+	elif [ "$1" = "-t" ]; then
+		shift
+		case "$1" in
+			challoner|1609)
+				export DRB_TRANSLATION="$1"
+				shift
+				;;
+			-*|"")
+				export DRB_TRANSLATION="challoner"
+				;;
+			*)
+				export DRB_TRANSLATION="challoner"
+				;;
+		esac
 	elif [ "$1" = "-W" ]; then
 		export DRB_NOLINEWRAP=1
 		shift
@@ -121,13 +144,13 @@ if [ $# -eq 0 ]; then
 		if ! read -r ref; then
 			break
 		fi
-		get_data drb.tsv | awk -v cmd=ref -v ref="$ref" "$(get_data drb.awk)" | ${PAGER}
+		get_text_data | awk -v cmd=ref -v ref="$ref" "$(get_data drb.awk)" | ${PAGER}
 	done
 	exit 0
 fi
 
 (
-get_data drb.tsv | awk -v cmd=ref -v ref="$*" "$(get_data drb.awk)"
+get_text_data | awk -v cmd=ref -v ref="$*" "$(get_data drb.awk)"
 if [ -n "${DRB_COMMENTARY}" ]; then
 	# Map full book names to Lapide abbreviations
 	lapide_abbrev() {
@@ -189,7 +212,7 @@ if [ -n "${DRB_COMMENTARY}" ]; then
 		echo ""
 		echo "--- ${_label} ---"
 		echo ""
-		get_data drb.tsv | awk -v cmd=ref -v ref="$_ref" "$(get_data drb.awk)" | \
+		get_text_data | awk -v cmd=ref -v ref="$_ref" "$(get_data drb.awk)" | \
 		sed -n 's/^\([A-Za-z0-9 ]*\)$/BOOK:\1/p; s/^\([0-9]*:[0-9]*\)\t.*/\1/p' | \
 		while IFS= read -r line; do
 			case "$line" in
