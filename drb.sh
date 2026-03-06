@@ -156,6 +156,26 @@ if [ -n "${DRB_COMMENTARY}" ]; then
 	# Map full book names to Lapide abbreviations
 	lapide_abbrev() {
 		case "$1" in
+			# Old Testament
+			Genesis) echo "Gn" ;; Exodus) echo "Ex" ;; Leviticus) echo "Lv" ;;
+			Numbers) echo "Nm" ;; Deuteronomy) echo "Dt" ;; Joshua) echo "Jos" ;;
+			Judges) echo "Jgs" ;; Ruth) echo "Ru" ;;
+			"1 Samuel") echo "1Sm" ;; "2 Samuel") echo "2Sm" ;;
+			"1 Kings") echo "1Kgs" ;; "2 Kings") echo "2Kgs" ;;
+			"1 Chronicles") echo "1Chr" ;; "2 Chronicles") echo "2Chr" ;;
+			Ezra) echo "Ezr" ;; Nehemiah) echo "Neh" ;;
+			Tobit) echo "Tb" ;; Judith) echo "Jdt" ;; Esther) echo "Est" ;;
+			"1 Maccabees") echo "1Mc" ;; "2 Maccabees") echo "2Mc" ;;
+			Job) echo "Jb" ;; Psalms) echo "Ps" ;; Proverbs) echo "Prv" ;;
+			Ecclesiastes) echo "Eccl" ;; "Song of Solomon") echo "Sg" ;;
+			Wisdom) echo "Wis" ;; Sirach) echo "Sir" ;;
+			Isaiah) echo "Is" ;; Jeremiah) echo "Jer" ;; Lamentations) echo "Lam" ;;
+			Baruch) echo "Bar" ;; Ezekiel) echo "Ez" ;; Daniel) echo "Dn" ;;
+			Hosea) echo "Hos" ;; Joel) echo "Jl" ;; Amos) echo "Am" ;;
+			Obadiah) echo "Ob" ;; Jonah) echo "Jon" ;; Micah) echo "Mi" ;;
+			Nahum) echo "Na" ;; Habakkuk) echo "Hb" ;; Zephaniah) echo "Zep" ;;
+			Haggai) echo "Hg" ;; Zechariah) echo "Zec" ;; Malachi) echo "Mal" ;;
+			# New Testament
 			Matthew) echo "Mt" ;; Mark) echo "Mk" ;; Luke) echo "Lk" ;;
 			John) echo "Jn" ;; "1 Corinthians") echo "1Cor" ;;
 			"2 Corinthians") echo "2Cor" ;; Galatians) echo "Gal" ;;
