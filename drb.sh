@@ -230,6 +230,7 @@ if [ -n "${DRB_COMMENTARY}" ]; then
 			John) echo "Jn" ;;
 			Romans) echo "Rom" ;;
 			"1 Corinthians") echo "1Cor" ;;
+			Philippians) echo "Phil" ;;
 			*) echo "" ;;
 		esac
 	}
@@ -316,7 +317,7 @@ if [ -n "${DRB_COMMENTARY}" ]; then
 						case "$abbrev" in
 							Mt)       _ch_tsv="chrysostom-matthew.tsv" ;;
 							Jn)       _ch_tsv="chrysostom-john.tsv" ;;
-							Rom|1Cor) _ch_tsv="chrysostom-epistles.tsv" ;;
+							Rom|1Cor|Phil) _ch_tsv="chrysostom-epistles.tsv" ;;
 							*)        continue ;;
 						esac
 						# Chrysostom TSVs use 4 columns: book/chapter/verse/commentary.
