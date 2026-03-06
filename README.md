@@ -2,11 +2,11 @@
 
 **Read the Douay-Rheims Bible from your terminal.**
 
-`73 Books · Vulgate Order · 4 Commentaries · Public Domain`
+`73 Books · Vulgate Order · 5 Commentaries · Public Domain`
 
 A command-line tool for reading the Douay-Rheims Bible (Challoner revision) — the classic English translation of the Latin Vulgate, with all 73 books of the Catholic canon including the deuterocanonical books.
 
-Includes the **Haydock Catholic Bible Commentary** (full Bible, 35,000+ entries), **Cornelius à Lapide** New Testament commentary, the **1609 Douai Annotations** (original Rheims-Douai marginal notes), and **Aquinas' Catena Aurea** with commentary on the Gospels and Pauline epistles.
+Includes the **Haydock Catholic Bible Commentary** (full Bible, 35,000+ entries), **Cornelius à Lapide** full Bible commentary (OT + NT, 8,000+ entries), the **1609 Douai Annotations** (original Rheims-Douai marginal notes), **Aquinas' Catena Aurea** with commentary on the Gospels, Pauline epistles, and Job, and **Balthasar Corderius SJ** commentary on Job.
 
 Inspired by [Luke Smith's kjv](https://github.com/LukeSmithxyz/kjv). Built for Catholics who live in the terminal.
 
@@ -87,7 +87,9 @@ Use `-c` to display commentary below each verse. Defaults to Haydock:
 
 ```
 $ drb -c John 1:1              # Haydock (default)
-$ drb -c lapide Matthew 1:2    # Cornelius à Lapide
+$ drb -c lapide Matthew 1:2    # Cornelius à Lapide (NT)
+$ drb -c lapide Isaiah 7:14    # Cornelius à Lapide (OT)
+$ drb -c lapide Genesis 1:1    # Cornelius à Lapide (OT)
 $ drb -c douai Genesis 22:1    # 1609 Douai Annotations
 $ drb -c 1609 Genesis 22:1     # alias for douai
 $ drb -c aquinas Matthew 5:3   # Aquinas (Catena Aurea)
@@ -96,11 +98,11 @@ $ drb -c all John 3:16         # all available commentaries
 
 **Haydock** covers the entire Bible (35,000+ entries) — Church Fathers, Doctors of the Church, traditional Catholic exegesis.
 
-**Cornelius à Lapide** covers the New Testament (2,400+ entries) — Gospels, 1-2 Corinthians, Galatians, 1 John. Dense, scholarly commentary from the 17th century Jesuit exegete.
+**Cornelius à Lapide** covers the **full Bible** (OT + NT, 8,000+ entries) — Genesis through Revelation. Dense, scholarly commentary from the 17th century Jesuit exegete.
 
 **1609 Douai Annotations** (`-c douai` or `-c 1609`) — the original marginal notes from the 1609 Douay Old Testament and 1582 Rheims New Testament (3,100+ entries). Text preserves original 1609 spelling: the long-s character ſ is printed as *f*, and archaic orthography is authentic, not a typo.
 
-**Aquinas (Catena Aurea)** (`-c aquinas`) — St. Thomas Aquinas' *Catena Aurea* ("Golden Chain"), a verse-by-verse compilation of patristic commentary on the four Gospels, together with his commentary on the Pauline epistles. Draws on Chrysostom, Augustine, Jerome, Ambrose, and other Fathers. Gospel commentary uses `aquinas-catena.tsv`; Pauline epistle commentary uses `aquinas-epistles.tsv` (sourced by Alcuin).
+**Aquinas (Catena Aurea)** (`-c aquinas`) — St. Thomas Aquinas' *Catena Aurea* ("Golden Chain"), a verse-by-verse compilation of patristic commentary on the four Gospels, together with his commentary on the Pauline epistles and Job. Draws on Chrysostom, Augustine, Jerome, Ambrose, and other Fathers. Gospel commentary uses `aquinas-catena.tsv`; Pauline epistle commentary uses `aquinas-epistles.tsv` (sourced by Alcuin); Job commentary uses `aquinas-job.tsv`.
 
 ### Random verse
 
@@ -151,11 +153,12 @@ drb> Wisdom 7
 | Source | Coverage | Entries |
 |--------|----------|---------|
 | **Haydock** (Rev. George Leo Haydock, 1859) | Full Bible | 35,000+ |
-| **Cornelius à Lapide** (English NT) | Gospels, Epistles | 2,400+ |
+| **Cornelius à Lapide** | Full Bible (OT + NT) | 8,000+ |
 | **1609 Douai Annotations** | OT + NT (original Douai/Rheims notes) | 3,100+ |
-| **Aquinas (Catena Aurea)** (St. Thomas Aquinas) | Gospels + Pauline Epistles | — |
+| **Aquinas (Catena Aurea)** (St. Thomas Aquinas) | Gospels + Pauline Epistles + Job | — |
+| **Balthasar Corderius SJ** (Job commentary) | Job | 193 |
 
-Use `-c haydock`, `-c lapide`, `-c douai` (alias: `-c 1609`), or `-c aquinas` to select. Use `-c all` to show all four.
+Use `-c haydock`, `-c lapide`, `-c douai` (alias: `-c 1609`), `-c aquinas`, or `-c corderius` to select. Use `-c all` to show all five.
 
 All commentary texts are public domain (pre-1928).
 
