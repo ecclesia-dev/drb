@@ -32,7 +32,7 @@ show_help() {
 	echo "  -t [VERSION]    translation version (default: challoner)"
 	echo "                  versions: challoner, 1609"
 	echo "  -c [SOURCE]     show commentary (default: haydock)"
-	echo "                  sources: haydock, lapide, douai, aquinas"
+	echo "                  sources: haydock, lapide, douai, aquinas, chrysostom"
 	echo "                  Note: douai (alias: 1609) uses original 1609 spelling —"
 	echo "                  ſ rendered as f, archaic orthography is authentic"
 	echo "                  aquinas: Catena Aurea (Gospels) + Epistles commentary"
@@ -83,7 +83,7 @@ while [ $# -gt 0 ]; do
 	elif [ "$1" = "-c" ]; then
 		shift
 		case "$1" in
-			haydock|lapide|douai|1609|aquinas|all)
+			haydock|lapide|douai|1609|aquinas|chrysostom|all)
 				if [ -z "$DRB_COMMENTARY" ]; then
 					export DRB_COMMENTARY="$1"
 				else
@@ -217,6 +217,19 @@ if [ -n "${DRB_COMMENTARY}" ]; then
 			"1 Timothy") echo "1Tim" ;; "2 Timothy") echo "2Tim" ;;
 			Titus) echo "Ti" ;; Philemon) echo "Phlm" ;; Hebrews) echo "Heb" ;;
 			Job) echo "Jb" ;;
+			Psalms) echo "Ps" ;;
+			Isaiah) echo "Is" ;;
+			*) echo "" ;;
+		esac
+	}
+
+	# Map full DRB book names to Chrysostom TSV abbreviations
+	chrysostom_abbrev() {
+		case "$1" in
+			Matthew) echo "Mt" ;;
+			John) echo "Jn" ;;
+			Romans) echo "Rom" ;;
+			"1 Corinthians") echo "1Cor" ;;
 			*) echo "" ;;
 		esac
 	}
@@ -224,12 +237,12 @@ if [ -n "${DRB_COMMENTARY}" ]; then
 	# Expand "all" and build source list
 	sources=""
 	case "${DRB_COMMENTARY}" in
-		*all*) sources="haydock lapide douai aquinas" ;;
+		*all*) sources="haydock lapide douai aquinas chrysostom" ;;
 		*)
 			IFS=','
 			for s in ${DRB_COMMENTARY}; do
 				case "$s" in
-					haydock|lapide|douai|1609|aquinas) sources="$sources $s" ;;
+					haydock|lapide|douai|1609|aquinas|chrysostom) sources="$sources $s" ;;
 				esac
 			done
 			unset IFS
@@ -246,6 +259,7 @@ if [ -n "${DRB_COMMENTARY}" ]; then
 			lapide)     _label="Cornelius à Lapide"         ; _tsv="lapide.tsv" ;;
 			douai|1609) _label="Douai Annotations (1609)"   ; _tsv="douai-1609.tsv" ;;
 			aquinas)    _label="Aquinas (Catena Aurea)"      ; _tsv="" ;;
+			chrysostom) _label="St. John Chrysostom"          ; _tsv="" ;;
 		esac
 		echo ""
 		echo "--- ${_label} ---"
@@ -278,6 +292,8 @@ if [ -n "${DRB_COMMENTARY}" ]; then
 						case "$abbrev" in
 							Mt|Mk|Lk|Jn) _aq_tsv="aquinas-catena.tsv" ;;
 							Jb)           _aq_tsv="aquinas-job.tsv" ;;
+							Ps)           _aq_tsv="aquinas-psalms.tsv" ;;
+							Is)           _aq_tsv="aquinas-isaiah.tsv" ;;
 							*)            _aq_tsv="aquinas-epistles.tsv" ;;
 						esac
 						# Aquinas TSVs use book/chapter/verse columns (not book/chapter:verse).
@@ -290,6 +306,28 @@ if [ -n "${DRB_COMMENTARY}" ]; then
 						   'NR>1 && $1==bk && $2==ch {
 						       if ($3+0<=vs+0) { nearest=$5 }
 						       else if (nearest=="") { nearest=$5 }
+						   }
+						   END { if (nearest!="") printf "  %s\t%s\n", vref, nearest }'
+					elif [ "$_src" = "chrysostom" ]; then
+						abbrev=$(chrysostom_abbrev "$curbook")
+						if [ -z "$abbrev" ]; then
+							continue
+						fi
+						case "$abbrev" in
+							Mt)       _ch_tsv="chrysostom-matthew.tsv" ;;
+							Jn)       _ch_tsv="chrysostom-john.tsv" ;;
+							Rom|1Cor) _ch_tsv="chrysostom-epistles.tsv" ;;
+							*)        continue ;;
+						esac
+						# Chrysostom TSVs use 4 columns: book/chapter/verse/commentary.
+						# Section-based lookup: find nearest verse ≤ requested.
+						_ch_ch="${line%%:*}"
+						_ch_vs="${line##*:}"
+						get_data "$_ch_tsv" | awk -F'	' \
+						   -v bk="$abbrev" -v ch="$_ch_ch" -v vs="$_ch_vs" -v vref="$line" \
+						   'NR>1 && $1==bk && $2==ch {
+						       if ($3+0<=vs+0) { nearest=$4 }
+						       else if (nearest=="") { nearest=$4 }
 						   }
 						   END { if (nearest!="") printf "  %s\t%s\n", vref, nearest }'
 					else
