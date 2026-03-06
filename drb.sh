@@ -205,7 +205,7 @@ if [ -n "${DRB_COMMENTARY}" ]; then
 		esac
 	}
 
-	# Map full DRB book names to Aquinas TSV abbreviations (Gospels + Pauline epistles)
+	# Map full DRB book names to Aquinas TSV abbreviations (Gospels + Pauline epistles + Job)
 	aquinas_abbrev() {
 		case "$1" in
 			Matthew) echo "Mt" ;; Mark) echo "Mk" ;; Luke) echo "Lk" ;;
@@ -216,6 +216,7 @@ if [ -n "${DRB_COMMENTARY}" ]; then
 			"1 Thessalonians") echo "1Th" ;; "2 Thessalonians") echo "2Th" ;;
 			"1 Timothy") echo "1Tim" ;; "2 Timothy") echo "2Tim" ;;
 			Titus) echo "Ti" ;; Philemon) echo "Phlm" ;; Hebrews) echo "Heb" ;;
+			Job) echo "Jb" ;;
 			*) echo "" ;;
 		esac
 	}
@@ -276,10 +277,21 @@ if [ -n "${DRB_COMMENTARY}" ]; then
 						fi
 						case "$abbrev" in
 							Mt|Mk|Lk|Jn) _aq_tsv="aquinas-catena.tsv" ;;
+							Jb)           _aq_tsv="aquinas-job.tsv" ;;
 							*)            _aq_tsv="aquinas-epistles.tsv" ;;
 						esac
-						get_data "$_aq_tsv" | grep "^${abbrev}	${line}	" | cut -f3 | \
-						   awk -v verse="$line" 'BEGIN{printf "  %s\t", verse}{print}'
+						# Aquinas TSVs use book/chapter/verse columns (not book/chapter:verse).
+						# Commentary is in column 5. Use section-based lookup: find the section
+						# whose start verse is nearest (≤ requested verse, or first in chapter).
+						_aq_ch="${line%%:*}"
+						_aq_vs="${line##*:}"
+						get_data "$_aq_tsv" | awk -F'	' \
+						   -v bk="$abbrev" -v ch="$_aq_ch" -v vs="$_aq_vs" -v vref="$line" \
+						   'NR>1 && $1==bk && $2==ch {
+						       if ($3+0<=vs+0) { nearest=$5 }
+						       else if (nearest=="") { nearest=$5 }
+						   }
+						   END { if (nearest!="") printf "  %s\t%s\n", vref, nearest }'
 					else
 						get_data "$_tsv" | grep "^${curbook}	${line}	" | cut -f3 | \
 						   awk -v verse="$line" 'BEGIN{printf "  %s\t", verse}{print}'
