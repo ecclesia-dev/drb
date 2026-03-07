@@ -26,9 +26,9 @@ import os
 import re
 import sys
 
-WORKDIR = "/Users/master/.openclaw/workspace/projects/drb"
+WORKDIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 HEADER = ["book", "chapter", "verse", "latin_incipit", "english_translation"]
-REPORT_PATH = "/Users/master/.openclaw/workspace/qa/alcuin-normalize-safe-2026-03-06.md"
+REPORT_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "qa", "alcuin-normalize-safe-2026-03-06.md")
 
 # Derive book abbreviation from filename: lapide-Am.tsv → "Am"
 def book_from_filename(fname):
