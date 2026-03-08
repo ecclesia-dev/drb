@@ -7,6 +7,20 @@
 # Build output
 drb
 
+# Python
+__pycache__/
+*.pyc
+
+# Scraping artifacts
+lapide-cache/
+*.log
+haydock-progress.json
+
+# Deprecated scripts (tracked historically, now ignored)
+scrape-haydock.py
+scrape-lapide.py
+douai-1609-clean.tsv
+
 # macOS
 .DS_Store
 
@@ -16,11 +30,4 @@ drb
 *~
 .vscode/
 .idea/
-__pycache__/
-lapide-cache/
-*.log
-*.pyc
-haydock-progress.json
-scrape-haydock.py
-scrape-lapide.py
 douai-1609-clean.tsv

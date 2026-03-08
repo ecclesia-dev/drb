@@ -1,10 +1,16 @@
 PREFIX = /usr/local
 
-drb: drb.sh drb.awk drb.tsv drb-1609.tsv haydock.tsv lapide.tsv douai-1609.tsv aquinas-catena.tsv aquinas-epistles.tsv aquinas-job.tsv aquinas-psalms.tsv aquinas-isaiah.tsv chrysostom-matthew.tsv chrysostom-john.tsv chrysostom-epistles.tsv
+COMMENTARY = commentary/haydock.tsv commentary/lapide.tsv commentary/douai-1609.tsv \
+             commentary/aquinas-catena.tsv commentary/aquinas-epistles.tsv \
+             commentary/aquinas-job.tsv commentary/aquinas-psalms.tsv \
+             commentary/aquinas-isaiah.tsv commentary/chrysostom-matthew.tsv \
+             commentary/chrysostom-john.tsv commentary/chrysostom-epistles.tsv
+
+drb: drb.sh drb.awk drb.tsv drb-1609.tsv $(COMMENTARY)
 	cat drb.sh > $@
 	echo 'exit 0' >> $@
 	echo '#EOF' >> $@
-	tar czf - drb.awk drb.tsv drb-1609.tsv haydock.tsv lapide.tsv douai-1609.tsv aquinas-catena.tsv aquinas-epistles.tsv aquinas-job.tsv aquinas-psalms.tsv aquinas-isaiah.tsv chrysostom-matthew.tsv chrysostom-john.tsv chrysostom-epistles.tsv >> $@
+	tar czf - drb.awk drb.tsv drb-1609.tsv $(COMMENTARY) >> $@
 	chmod +x $@
 
 test: drb.sh

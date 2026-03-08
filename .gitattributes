@@ -1,0 +1,5 @@
+# Linguist overrides — this is a shell project, not Python
+scripts/*.py linguist-detectable=false
+*.py linguist-detectable=false
+*.tsv linguist-detectable=false
+*.sh linguist-documentation=false

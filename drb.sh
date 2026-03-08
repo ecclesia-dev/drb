@@ -256,9 +256,9 @@ if [ -n "${DRB_COMMENTARY}" ]; then
 	show_commentary() {
 		_src="$1"
 		case "$_src" in
-			haydock)    _label="Haydock Commentary"         ; _tsv="haydock.tsv" ;;
-			lapide)     _label="Cornelius à Lapide"         ; _tsv="lapide.tsv" ;;
-			douai|1609) _label="Douai Annotations (1609)"   ; _tsv="douai-1609.tsv" ;;
+			haydock)    _label="Haydock Commentary"         ; _tsv="commentary/haydock.tsv" ;;
+			lapide)     _label="Cornelius à Lapide"         ; _tsv="commentary/lapide.tsv" ;;
+			douai|1609) _label="Douai Annotations (1609)"   ; _tsv="commentary/douai-1609.tsv" ;;
 			aquinas)    _label="Aquinas (Catena Aurea)"      ; _tsv="" ;;
 			chrysostom) _label="St. John Chrysostom"          ; _tsv="" ;;
 		esac
@@ -291,11 +291,11 @@ if [ -n "${DRB_COMMENTARY}" ]; then
 							continue
 						fi
 						case "$abbrev" in
-							Mt|Mk|Lk|Jn) _aq_tsv="aquinas-catena.tsv" ;;
-							Jb)           _aq_tsv="aquinas-job.tsv" ;;
-							Ps)           _aq_tsv="aquinas-psalms.tsv" ;;
-							Is)           _aq_tsv="aquinas-isaiah.tsv" ;;
-							*)            _aq_tsv="aquinas-epistles.tsv" ;;
+							Mt|Mk|Lk|Jn) _aq_tsv="commentary/aquinas-catena.tsv" ;;
+							Jb)           _aq_tsv="commentary/aquinas-job.tsv" ;;
+							Ps)           _aq_tsv="commentary/aquinas-psalms.tsv" ;;
+							Is)           _aq_tsv="commentary/aquinas-isaiah.tsv" ;;
+							*)            _aq_tsv="commentary/aquinas-epistles.tsv" ;;
 						esac
 						# Aquinas TSVs use book/chapter/verse columns (not book/chapter:verse).
 						# Commentary is in column 5. Use section-based lookup: find the section
@@ -315,9 +315,9 @@ if [ -n "${DRB_COMMENTARY}" ]; then
 							continue
 						fi
 						case "$abbrev" in
-							Mt)       _ch_tsv="chrysostom-matthew.tsv" ;;
-							Jn)       _ch_tsv="chrysostom-john.tsv" ;;
-							Rom|1Cor|Phil) _ch_tsv="chrysostom-epistles.tsv" ;;
+							Mt)       _ch_tsv="commentary/chrysostom-matthew.tsv" ;;
+							Jn)       _ch_tsv="commentary/chrysostom-john.tsv" ;;
+							Rom|1Cor|Phil) _ch_tsv="commentary/chrysostom-epistles.tsv" ;;
 							*)        continue ;;
 						esac
 						# Chrysostom TSVs use 4 columns: book/chapter/verse/commentary.
