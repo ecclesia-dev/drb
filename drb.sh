@@ -32,10 +32,11 @@ show_help() {
 	echo "  -t [VERSION]    translation version (default: challoner)"
 	echo "                  versions: challoner, 1609"
 	echo "  -c [SOURCE]     show commentary (default: haydock)"
-	echo "                  sources: haydock, lapide, douai, aquinas, chrysostom"
+	echo "                  sources: haydock, lapide, douai, aquinas, chrysostom, vulgate"
 	echo "                  Note: douai (alias: 1609) uses original 1609 spelling —"
 	echo "                  ſ rendered as f, archaic orthography is authentic"
 	echo "                  aquinas: Catena Aurea (Gospels) + Epistles commentary"
+	echo "                  vulgate: Clementine Vulgate (Latin)"
 	echo "  -W              no line wrap"
 	echo "  -h              show help"
 	echo
@@ -83,7 +84,7 @@ while [ $# -gt 0 ]; do
 	elif [ "$1" = "-c" ]; then
 		shift
 		case "$1" in
-			haydock|lapide|douai|1609|aquinas|chrysostom|all)
+			haydock|lapide|douai|1609|aquinas|chrysostom|vulgate|all)
 				if [ -z "$DRB_COMMENTARY" ]; then
 					export DRB_COMMENTARY="$1"
 				else
@@ -238,12 +239,12 @@ if [ -n "${DRB_COMMENTARY}" ]; then
 	# Expand "all" and build source list
 	sources=""
 	case "${DRB_COMMENTARY}" in
-		*all*) sources="haydock lapide douai aquinas chrysostom" ;;
+		*all*) sources="haydock lapide douai aquinas chrysostom vulgate" ;;
 		*)
 			IFS=','
 			for s in ${DRB_COMMENTARY}; do
 				case "$s" in
-					haydock|lapide|douai|1609|aquinas|chrysostom) sources="$sources $s" ;;
+					haydock|lapide|douai|1609|aquinas|chrysostom|vulgate) sources="$sources $s" ;;
 				esac
 			done
 			unset IFS
@@ -260,7 +261,8 @@ if [ -n "${DRB_COMMENTARY}" ]; then
 			lapide)     _label="Cornelius à Lapide"         ; _tsv="lapide.tsv" ;;
 			douai|1609) _label="Douai Annotations (1609)"   ; _tsv="douai-1609.tsv" ;;
 			aquinas)    _label="Aquinas (Catena Aurea)"      ; _tsv="" ;;
-			chrysostom) _label="St. John Chrysostom"          ; _tsv="" ;;
+			chrysostom) _label="St. John Chrysostom"         ; _tsv="" ;;
+			vulgate)    _label="Clementine Vulgate (Latin)"  ; _tsv="vulgate-normalized.tsv" ;;
 		esac
 		echo ""
 		echo "--- ${_label} ---"
