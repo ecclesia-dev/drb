@@ -158,23 +158,23 @@ if [ -n "${DRB_COMMENTARY}" ]; then
 		case "$1" in
 			# Old Testament
 			Genesis) echo "Gn" ;; Exodus) echo "Ex" ;; Leviticus) echo "Lv" ;;
-			Numbers) echo "Nm" ;; Deuteronomy) echo "Dt" ;; Joshua) echo "Jos" ;;
+			Numbers) echo "Nm" ;; Deuteronomy) echo "Dt" ;; Josue) echo "Jos" ;;
 			Judges) echo "Jgs" ;; Ruth) echo "Ru" ;;
-			"1 Samuel") echo "1Sm" ;; "2 Samuel") echo "2Sm" ;;
-			"1 Kings") echo "1Kgs" ;; "2 Kings") echo "2Kgs" ;;
-			"1 Chronicles") echo "1Chr" ;; "2 Chronicles") echo "2Chr" ;;
-			Ezra) echo "Ezr" ;; Nehemiah) echo "Neh" ;;
-			Tobit) echo "Tb" ;; Judith) echo "Jdt" ;; Esther) echo "Est" ;;
-			"1 Maccabees") echo "1Mc" ;; "2 Maccabees") echo "2Mc" ;;
+			"1 Kings") echo "1Sm" ;; "2 Kings") echo "2Sm" ;;
+			"3 Kings") echo "1Kgs" ;; "4 Kings") echo "2Kgs" ;;
+			"1 Paralipomenon") echo "1Chr" ;; "2 Paralipomenon") echo "2Chr" ;;
+			"1 Esdras") echo "Ezr" ;; "2 Esdras") echo "Neh" ;;
+			Tobias) echo "Tb" ;; Judith) echo "Jdt" ;; Esther) echo "Est" ;;
+			"1 Machabees") echo "1Mc" ;; "2 Machabees") echo "2Mc" ;;
 			Job) echo "Jb" ;; Psalms) echo "Ps" ;; Proverbs) echo "Prv" ;;
-			Ecclesiastes) echo "Eccl" ;; "Song of Solomon") echo "Sg" ;;
-			Wisdom) echo "Wis" ;; Sirach) echo "Sir" ;;
-			Isaiah) echo "Is" ;; Jeremiah) echo "Jer" ;; Lamentations) echo "Lam" ;;
-			Baruch) echo "Bar" ;; Ezekiel) echo "Ez" ;; Daniel) echo "Dn" ;;
-			Hosea) echo "Hos" ;; Joel) echo "Jl" ;; Amos) echo "Am" ;;
-			Obadiah) echo "Ob" ;; Jonah) echo "Jon" ;; Micah) echo "Mi" ;;
-			Nahum) echo "Na" ;; Habakkuk) echo "Hb" ;; Zephaniah) echo "Zep" ;;
-			Haggai) echo "Hg" ;; Zechariah) echo "Zec" ;; Malachi) echo "Mal" ;;
+			Ecclesiastes) echo "Eccl" ;; "Canticle of Canticles") echo "Sg" ;;
+			Wisdom) echo "Wis" ;; Ecclesiasticus) echo "Sir" ;;
+			Isaias) echo "Is" ;; Jeremias) echo "Jer" ;; Lamentations) echo "Lam" ;;
+			Baruch) echo "Bar" ;; Ezechiel) echo "Ez" ;; Daniel) echo "Dn" ;;
+			Osee) echo "Hos" ;; Joel) echo "Jl" ;; Amos) echo "Am" ;;
+			Abdias) echo "Ob" ;; Jonas) echo "Jon" ;; Micheas) echo "Mi" ;;
+			Nahum) echo "Na" ;; Habacuc) echo "Hb" ;; Sophonias) echo "Zep" ;;
+			Aggeus) echo "Hg" ;; Zacharias) echo "Zec" ;; Malachias) echo "Mal" ;;
 			# New Testament
 			Matthew) echo "Mt" ;; Mark) echo "Mk" ;; Luke) echo "Lk" ;;
 			John) echo "Jn" ;; "1 Corinthians") echo "1Cor" ;;
@@ -187,15 +187,15 @@ if [ -n "${DRB_COMMENTARY}" ]; then
 	douai_abbrev() {
 		case "$1" in
 			Genesis) echo "Gn" ;; Exodus) echo "Ex" ;; Leviticus) echo "Lv" ;;
-			Numbers) echo "Nm" ;; Deuteronomy) echo "Dt" ;; Joshua) echo "Jos" ;;
-			Judges) echo "Jgs" ;; Ruth) echo "Ru" ;; Ezra) echo "Ezr" ;;
-			Tobit) echo "Tb" ;; Judith) echo "Jdt" ;; Esther) echo "Est" ;;
-			"1 Maccabees") echo "1Mc" ;; Job) echo "Jb" ;; Psalms) echo "Ps" ;;
+			Numbers) echo "Nm" ;; Deuteronomy) echo "Dt" ;; Josue) echo "Jos" ;;
+			Judges) echo "Jgs" ;; Ruth) echo "Ru" ;; "1 Esdras") echo "Ezr" ;;
+			Tobias) echo "Tb" ;; Judith) echo "Jdt" ;; Esther) echo "Est" ;;
+			"1 Machabees") echo "1Mc" ;; Job) echo "Jb" ;; Psalms) echo "Ps" ;;
 			Proverbs) echo "Prv" ;; Ecclesiastes) echo "Eccl" ;;
-			"Song of Solomon") echo "Sg" ;; Wisdom) echo "Wis" ;;
-			Sirach) echo "Sir" ;; Isaiah) echo "Is" ;; Jeremiah) echo "Jer" ;;
+			"Canticle of Canticles") echo "Sg" ;; Wisdom) echo "Wis" ;;
+			Ecclesiasticus) echo "Sir" ;; Isaias) echo "Is" ;; Jeremias) echo "Jer" ;;
 			Baruch) echo "Bar" ;; Daniel) echo "Dn" ;; Amos) echo "Am" ;;
-			Zechariah) echo "Zec" ;; Malachi) echo "Mal" ;; Matthew) echo "Mt" ;;
+			Zacharias) echo "Zec" ;; Malachias) echo "Mal" ;; Matthew) echo "Mt" ;;
 			Mark) echo "Mk" ;; Luke) echo "Lk" ;; John) echo "Jn" ;;
 			Romans) echo "Rom" ;; "1 Corinthians") echo "1Cor" ;;
 			Galatians) echo "Gal" ;; Ephesians) echo "Eph" ;;
@@ -218,7 +218,7 @@ if [ -n "${DRB_COMMENTARY}" ]; then
 			Titus) echo "Ti" ;; Philemon) echo "Phlm" ;; Hebrews) echo "Heb" ;;
 			Job) echo "Jb" ;;
 			Psalms) echo "Ps" ;;
-			Isaiah) echo "Is" ;;
+			Isaias) echo "Is" ;;
 			*) echo "" ;;
 		esac
 	}
